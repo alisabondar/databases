@@ -13,11 +13,10 @@ module.exports = {
     });
   },
   post: function (req, res) {
-    console.log('line 16 POST inside CONTROLLERS USER', req.body);
-
-
-    models.users.create(req.body.username, (err, data) => {
-      console.log('LINE 18 data from users post CONTROLLER: ', data);
+    // console.log('line 16 POST inside CONTROLLERS USER', req.body.username);
+    var user = req.body;
+    models.users.create(user, (err, data) => {
+      // console.log('LINE 18 data from users post CONTROLLER: ', data);
       if (err) {
         console.error(err);
       } else {

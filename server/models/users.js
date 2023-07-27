@@ -10,14 +10,14 @@ module.exports = {
     });
   },
   create: function (user, callback) {
-    console.log('user in CREATE MODEL ', user, ' type: ', typeof user)
-    db.query(`INSERT INTO users(username) VALUES('Valjean')`, (err, data) => {
+    // console.log('user in CREATE MODEL ', user, ' type: ', typeof user)
+    console.log('this is user data', user);
+    db.query("INSERT INTO users(username) VALUES ('"+user.username+"');", (err, result) => {
       if (err) {
         callback(err, null);
       } else {
-        // need to stringify here for controller
-        console.log('inside CREATE query,', JSON.stringify(data));
-        callback(null, JSON.stringify(data));
+        console.log('success!', JSON.stringify(result));
+        callback(null, JSON.stringify(result));
       }
     });
   }

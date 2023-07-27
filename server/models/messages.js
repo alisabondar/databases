@@ -3,7 +3,7 @@ var db = require('../db');
 
 module.exports = {
   getAll: function (callback) {
-    db.query('SELECT * FROM messages', (err, data) => {
+    db.query('SELECT users.username, rooms.roomname, messages.text FROM messages INNER JOIN users WHERE messages.username_id = users.id INNER JOIN rooms where messages.roomname_id = roomname.id', (err, data) => {
       if (err) {
         callback(err, null);
       } else {
@@ -19,20 +19,18 @@ module.exports = {
      *  callback(null, data);
      */
   }, // a function which produces all the messages
-  create: function (username, room, msg, callback) {
-    username_id = db.query(`SELECT id FROM users WHERE username = ${username}`);
-    // console.log('usernameID', username_id);
-    roomname_id = db.query(`SELECT id FROM rooms WHERE roomname = ${room}`);
-    // console.log('roomsID', roomname_id);
-
-    db.query(`INSERT INTO messages(text, username_id, roomname_id) VALUES(${msg}, ${username_id}, ${roomname_id})`, (err, data) => {
+  create: function (message, callback) {
+    /* GET USERNAME FROM TABLE */
+    console.log(message);
+    db.query(`INSERT INTO messages (text, username_id, roomname_id) VALUES (${message.message})`, (err, data) => {
       if (err) {
         callback(err, null);
       } else {
-        // need to stringify here for controller
-        callback(null, JSON.stringify(data));
+        callback(null, data);
       }
     });
-  } // a function which can be used to insert a message into the database
+  }
 };
+
+
 
